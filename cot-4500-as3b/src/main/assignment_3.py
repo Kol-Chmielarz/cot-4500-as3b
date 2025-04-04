@@ -48,13 +48,18 @@ def diag_dom(A):
 
     for i in range(n):
         diag = abs(A[i, i])
-        sum = np.sum(np.abs(A[i])) - diag
+        sum = 0
+        for j in range(n):
+            if j!=i:
+                sum += abs(A[i, j])
 
         if diag < sum:
             dom = False
+            return dom
         
         if diag > sum:
             dom = True
+            
 
     return dom
 
@@ -67,14 +72,14 @@ def pos_def(A):
                 return False
             
 
-    for z in range(1, n+1):
-        minor = np.zeros((z, z))
-        for i in range(z):
-            for j in range(z):
-                minor[i, j] = A[i, j]
-        det = np.linalg.det(minor)
-        if det <= 0:
+    A = A.astype(float)
+    for i in range(n):
+        pivot = A[i, i]
+        if pivot <= 0:
             return False
-    return True
 
+        for j in range(i + 1, n):
+            factor = A[j, i] / pivot
+            A[j, i:] -= factor * A[i, i:]
+    return True
 
