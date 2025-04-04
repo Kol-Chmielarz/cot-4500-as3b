@@ -1,0 +1,9 @@
+Only using numpy
+
+I do use 
+import sys
+import os
+
+to import functions to test file.
+
+Run on MacOS
